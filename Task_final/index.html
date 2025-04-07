@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Task Manager</h1>
+        <div class="stats">
+          <div>
+            <span class="dot completed"></span>
+            <span id="completed-count">0 Completed</span>
+          </div>
+          <div>
+            <span class="dot pending"></span>
+            <span id="pending-count">0 Pending</span>
+          </div>
+          <div>
+            <span class="dot urgent"></span>
+            <span id="urgent-count">0 Urgent</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="controls">
+        <input type="text" id="task-input" placeholder="Add a new task..." />
+        <select id="priority-select">
+          <option value="normal">Normal</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        <button id="add-task-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Add Task
+        </button>
+      </div>
+
+      <div class="filter-container">
+        <button class="filter-button active" data-filter="all">All</button>
+        <button class="filter-button" data-filter="active">Active</button>
+        <button class="filter-button" data-filter="completed">Completed</button>
+        <button class="filter-button" data-filter="urgent">Urgent</button>
+      </div>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Search tasks..."
+        />
+      </div>
+
+      <div class="tasks" id="tasks-container">
+        <!-- Tasks will be dynamically added here -->
+      </div>
+
+      <div class="summary" id="summary">
+        <!-- Summary will be dynamically added here -->
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
