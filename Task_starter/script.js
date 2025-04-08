@@ -1,41 +1,83 @@
 
 // Task data model
 let tasks = [
-    {
-        id: 1,
-        title: 'Complete Project proposal',
-        completed: true,
-        priority: 'urgent',
-        createAt: new Date('2024-04-01T10:00:00')
-    },
-    {
-        id: 2,
-        title: 'Cook Food',
-        completed: false,
-        priority: 'normal',
-        createAt: new Date()
-    },
-    {
-        id: 2,
-        title: 'Cook Food',
-        completed: false,
-        priority: 'normal',
-        createAt: new Date()
-    },
+  {
+    id: 1,
+    title: 'Complete Project proposal',
+    completed: true,
+    priority: 'urgent',
+    createAt: new Date('2024-04-01T10:00:00')
+  },
+  {
+    id: 2,
+    title: 'Cook Food',
+    completed: false,
+    priority: 'normal',
+    createAt: new Date()
+  },
+  {
+    id: 3,
+    title: 'Study JS',
+    completed: false,
+    priority: 'normal',
+    createAt: new Date()
+  },
+  {
+    id: 4,
+    title: 'Study AWS',
+    completed: false,
+    priority: 'normal',
+    createAt: new Date()
+  },
 ];
 
 const tasksContainer = document.getElementById('tasks-container');
 const task = document.getElementById('task');
+const addTaskBtn = document.getElementById('add-task-btn');
+const addInput = document.getElementById('task-input');
+const priority_select = document.getElementById('priority-select')
+const urgent_count = document.getElementById('urgent-count')
 
+
+// Click Event
+addTaskBtn.addEventListener('click', addTask);
+// Key Event
+
+addInput.addEventListener('keypress', (e) => {
+  // console.log(e);
+
+  if (e.key === 'Enter') {
+    addTask();
+  }
+})
+
+function addTask() {
+  console.log('Add Input', addInput.value);
+  let title = addInput.value.trim()
+  // console.log('Add is Working');
+  if (title == '') return;
+  console.log('Add');
+
+  tasks.unshift({
+    id: Date.now(),
+    title: title,
+    priority: priority_select.value,
+    createAt: new Date()
+
+  })
+  // console.log(tasks);
+  renderTasks();
+  addInput.value = '';
+
+}
 
 function renderTasks() {
-    tasksContainer.innerHTML = '';
-    tasks.forEach((ts) => {
-        const taskHTML = document.createElement('div');
-        const status = ts.completed ? 'completed' : ts.priority
-        taskHTML.className = `task ${status}`
-        taskHTML.innerHTML = `
-    
+  tasksContainer.innerHTML = '';
+  tasks.forEach((ts) => {
+    const taskHTML = document.createElement('div');
+    const status = ts.completed ? 'completed' : ts.priority
+    taskHTML.className = `task ${status}`
+    taskHTML.innerHTML = `
           <div class="task-left">
             <div class="task-check" onclick="toggleTaskCompletion(1)">
               <!-- This is where the checkmark SVG would appear when completed -->
@@ -49,7 +91,7 @@ function renderTasks() {
             </div>
           </div>
           <div class="task-actions">
-            <button class="task-action-btn" onclick="deleteTask(1)">
+            <button class="task-action-btn" onclick="deleteTask(${ts.id})">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -66,19 +108,26 @@ function renderTasks() {
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
               </svg>
             </button>
-          </div>
-
-      
+          </div>      
       `
-        tasksContainer.appendChild(taskHTML);
-    })
-
-    console.log((tasks));
-
-
-
-
+    tasksContainer.appendChild(taskHTML);
+    urgent()
+  });
+  console.log((tasks));
 }
 
+function deleteTask(id) {
+  console.log(id);
+
+  tasks = tasks.filter(task => task.id != id);
+  renderTasks();
+}
+
+function urgent() {
+  let urgentNew = tasks.filter((task) => task.priority == 'urgent');
+  urgent_count.innerText = urgentNew.length + ' ' + 'Urgent'
+  console.log('urgent', urgentNew);
+
+}
 
 renderTasks();
